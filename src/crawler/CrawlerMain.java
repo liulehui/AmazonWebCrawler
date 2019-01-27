@@ -3,7 +3,7 @@ package crawler;
 
 
 /**
- * Created by jiayangan on 10/12/16.
+ * Created by Lehui Liu on 01/26/19.
  */
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -27,16 +27,17 @@ public class CrawlerMain {
         // proxy is the list we need for the challenge in crawler
         if(args.length < 2)
         {
-            System.out.println("Usage: Crawler <rawQueryDataFilePath> <adsDataFilePath> <proxyFilePath> <logFilePath>");
+            System.out.println("Usage: Crawler <rawQueryDataFilePath> <adsDataFilePath> <logFilePath>");
             System.exit(0);
         }
         ObjectMapper mapper = new ObjectMapper();
         String rawQueryDataFilePath = args[0];
         String adsDataFilePath = args[1];
-        String proxyFilePath = args[2];
-        String logFilePath = args[3];
+//        String proxyFilePath = args[2];
+        String logFilePath = args[2];
 
-        AmazonCrawler crawler = new AmazonCrawler(proxyFilePath, logFilePath);
+//        AmazonCrawler crawler = new AmazonCrawler(proxyFilePath, logFilePath);
+        AmazonCrawler crawler = new AmazonCrawler(logFilePath);
 
         File file = new File(adsDataFilePath);
         // if file doesnt exists, then create it

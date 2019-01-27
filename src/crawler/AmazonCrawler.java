@@ -21,24 +21,24 @@ import org.jsoup.select.Elements;
 import ads.Ad;
 
 /**
- * Created by jiayangan on 10/13/16.
+ * Created by Lehui Liu on 01/26/19
  */
 
 
 public class AmazonCrawler {
     private static final String AMAZON_QUERY_URL = "https://www.amazon.com/s/ref=nb_sb_noss?field-keywords=";
     private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36";
-    private final String authUser = "ganjiayan";
-    private final String authPassword = "Bi7jU9TI";
-    private List<String> proxyList;
+//    private final String authUser = "ganjiayan";
+//    private final String authPassword = "Bi7jU9TI";
+//    private List<String> proxyList;
     private List<String> titleList;
     private List<String> categoryList;
     BufferedWriter logBFWriter;
 
     private int index = 0;
 
-    public AmazonCrawler(String proxy_file, String log_file) {
-        initProxyList(proxy_file);
+    public AmazonCrawler(String log_file) {
+//        initProxyList(proxy_file);
 
         initHtmlSelector();
 
@@ -55,33 +55,33 @@ public class AmazonCrawler {
             }
         }
     }
-
-    private void initProxyList(String proxy_file) {
-        proxyList = new ArrayList<String>();
-        try (BufferedReader br = new BufferedReader(new FileReader(proxy_file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] fields = line.split(",");
-                String ip = fields[0].trim();
-                proxyList.add(ip);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Authenticator.setDefault(
-                new Authenticator() {
-                    @Override
-                    public PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(
-                                authUser, authPassword.toCharArray());
-                    }
-                }
-        );
-
-        System.setProperty("http.proxyUser", authUser);
-        System.setProperty("http.proxyPassword", authPassword);
-        System.setProperty("socksProxyPort", "61336"); // set proxy port
-    }
+//  the proxy pool is not available for now
+//    private void initProxyList(String proxy_file) {
+//        proxyList = new ArrayList<String>();
+//        try (BufferedReader br = new BufferedReader(new FileReader(proxy_file))) {
+//            String line;
+//            while ((line = br.readLine()) != null) {
+//                String[] fields = line.split(",");
+//                String ip = fields[0].trim();
+//                proxyList.add(ip);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Authenticator.setDefault(
+//                new Authenticator() {
+//                    @Override
+//                    public PasswordAuthentication getPasswordAuthentication() {
+//                        return new PasswordAuthentication(
+//                                authUser, authPassword.toCharArray());
+//                    }
+//                }
+//        );
+//
+//        System.setProperty("http.proxyUser", authUser);
+//        System.setProperty("http.proxyPassword", authPassword);
+//        System.setProperty("socksProxyPort", "61336"); // set proxy port
+//    }
 
     private void initHtmlSelector() {
         titleList = new ArrayList<String>();
@@ -110,30 +110,30 @@ public class AmazonCrawler {
         }
 
     }
+//
+//    private void setProxy() {
+//        //rotate to use proxy
+//        if (index == proxyList.size()) {
+//            index = 0;
+//        }
+//        String proxy = proxyList.get(index);
+//        System.setProperty("socksProxyHost", proxy); // set proxy server
+//        index++;
+//    }
 
-    private void setProxy() {
-        //rotate to use proxy
-        if (index == proxyList.size()) {
-            index = 0;
-        }
-        String proxy = proxyList.get(index);
-        System.setProperty("socksProxyHost", proxy); // set proxy server
-        index++;
-    }
-
-    private void testProxy() {
-        System.setProperty("socksProxyHost", "199.101.97.149"); // set proxy server
-        System.setProperty("socksProxyPort", "61336"); // set proxy port
-        String test_url = "http://www.toolsvoid.com/what-is-my-ip-address";
-        try {
-            Document doc = Jsoup.connect(test_url).userAgent(USER_AGENT).timeout(10000).get();
-            String iP = doc.select("body > section.articles-section > div > div > div > div.col-md-8.display-flex > div > div.table-responsive > table > tbody > tr:nth-child(1) > td:nth-child(2) > strong").first().text(); //get used IP.
-            System.out.println("IP-Address: " + iP);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+//    private void testProxy() {
+//        System.setProperty("socksProxyHost", "199.101.97.149"); // set proxy server
+//        System.setProperty("socksProxyPort", "61336"); // set proxy port
+//        String test_url = "http://www.toolsvoid.com/what-is-my-ip-address";
+//        try {
+//            Document doc = Jsoup.connect(test_url).userAgent(USER_AGENT).timeout(10000).get();
+//            String iP = doc.select("body > section.articles-section > div > div > div > div.col-md-8.display-flex > div > div.table-responsive > table > tbody > tr:nth-child(1) > td:nth-child(2) > strong").first().text(); //get used IP.
+//            System.out.println("IP-Address: " + iP);
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//    }
 
     public List<Ad> GetAdBasicInfoByQuery(String query, double bidPrice,int campaignId,int queryGroupId) {
         List<Ad> products = new ArrayList<>();
@@ -148,7 +148,7 @@ public class AmazonCrawler {
             headers.put("Accept-Encoding", "gzip, deflate, sdch, br");
             headers.put("Accept-Language", "en-US,en;q=0.8");
             Document doc = Jsoup.connect(url).headers(headers).userAgent(USER_AGENT).timeout(100000).get();
-            //Document doc = Jsoup.connect(url).userAgent(USER_AGENT).timeout(100000).get();
+            //Document doc = Jsoup.con nect(url).userAgent(USER_AGENT).timeout(100000).get();
 
             //System.out.println(doc.text());
             //#s-results-list-atf
@@ -200,7 +200,7 @@ public class AmazonCrawler {
                     continue;
                 }
 
-
+ 
                 String brand_path = "#result_"+Integer.toString(i)+" > div > div > div > div.a-fixed-left-grid-col.a-col-right > div.a-row.a-spacing-small > div > span:nth-child(2)";
                 Element brand = doc.select(brand_path).first();
                 if(brand != null) {
@@ -208,6 +208,7 @@ public class AmazonCrawler {
                     ad.brand = brand.text();
                 }
                 //#result_2 > div > div > div > div.a-fixed-left-grid-col.a-col-right > div:nth-child(3) > div.a-column.a-span7 > div.a-row.a-spacing-none > a > span > span > span
+
                 ad.bidPrice = bidPrice;
                 ad.campaignId = campaignId;
                 ad.price = 0.0;
