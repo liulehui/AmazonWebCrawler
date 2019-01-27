@@ -1,6 +1,10 @@
- 
-### 12.31 理论课
-#### Agenda
+## Content
+This a basic web crawler developed in JAVA to get info from Amazon to generate ads records.    
+We start by making our own rawQuery to get adds.
+   
+* Still need improvement on generate N-gram query and add Hashset to prevent duplications.  
+
+### Agenda
 * 互联网广告形式
 * 广告数据结构
 * 搜索广告基本流程
@@ -8,7 +12,7 @@
 * 搜索日志数据
 
 #### 互联网广告形式
-1. search ads 搜索广告  
+1. search ads 搜索广告 
 logic: match keywords to user's query  
 format: text, image  
 position: main line, side bar, etc.   
